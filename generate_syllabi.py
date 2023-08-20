@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
 from jinja2 import Environment, FileSystemLoader
 import os
 import subprocess
-from teaching_data.syllabi_data import syllabi_data
+from teaching_data.syllabi_data import syllabi_data, CURRENT_SEMESTER
 
 
 # Set up Jinja2 env
@@ -42,3 +44,8 @@ def run_pdflatex(tex_files):
                 os.remove(f"{root}.{ext}")
             except FileNotFoundError:
                 pass
+
+
+if __name__ == "__main__":
+    lst_files = create_syllabi(CURRENT_SEMESTER)
+    run_pdflatex(lst_files)
