@@ -2,6 +2,9 @@ from datetime import datetime, timedelta
 import os
 
 
+DATE_FORMAT = '%m-%d-%y'
+
+
 def list_all_dates(first, last, weekdays=[0, 2]):
     """
     Generate a list of dates between `first` and `last` that fall on
@@ -15,15 +18,18 @@ def list_all_dates(first, last, weekdays=[0, 2]):
     :return: A list of dates in 'mm-dd-yy' format.
     """
     # Convert str to datetime objects
-    start_date = datetime.strptime(first, '%m-%d-%y')
-    end_date = datetime.strptime(last, '%m-%d-%y')
+    start_date = datetime.strptime(first, DATE_FORMAT)
+    end_date = datetime.strptime(last, DATE_FORMAT)
 
-    dates_in_range = [start_date + timedelta(days=x)
-                      for x in range((end_date-start_date).days + 1)]
-    list_days = [date for date in dates_in_range if date.weekday() in weekdays]
-    list_days = sorted(list_days)
+    lst_days = []
 
-    return [date.strftime('%m-%d-%y') for date in list_days]
+    current_day = start_date
+    while current_day <= end_date:
+        if current_day.weekday() in weekdays:
+            lst_days.append(current_day.strftime(DATE_FORMAT))
+        current_day += timedelta(days=1)
+
+    return lst_days
 
 
 def file_name_to_export(lst, output_dir):
