@@ -2,31 +2,37 @@ from datetime import datetime, timedelta
 import os
 
 
-DATE_FORMAT = '%m-%d-%y'
-
-
-def list_all_dates(first, last, weekdays=[0, 2]):
+def list_all_dates(first, last, no_class=[], weekdays=[0, 2]):
     """
     Generate a list of dates between `first` and `last` that fall on
     specified `weekdays`.
 
     :param first: Start date as a string in 'mm-dd-yy' format.
     :param last: End date as a string in 'mm-dd-yy' format.
+    :param no_class: Dates when there are no classes.
     :param weekdays: A list of integers representing weekdays where
     Monday is 0 and Sunday is 6.
 
-    :return: A list of dates in 'mm-dd-yy' format.
+    :return: A list of dates in 'mm-dd-yy' format. Days in `no_class`
+    are marked with an asterisk.
     """
     # Convert str to datetime objects
+    DATE_FORMAT = '%m-%d-%y'
+
     start_date = datetime.strptime(first, DATE_FORMAT)
     end_date = datetime.strptime(last, DATE_FORMAT)
+    no_class_dates = [datetime.strptime(d, DATE_FORMAT) for d in no_class]
 
     lst_days = []
 
     current_day = start_date
     while current_day <= end_date:
         if current_day.weekday() in weekdays:
-            lst_days.append(current_day.strftime(DATE_FORMAT))
+            day_str = current_day.strftime(DATE_FORMAT)
+            if current_day in no_class_dates:
+                lst_days.append(day_str + "*")
+            else:
+                lst_days.append(day_str)
         current_day += timedelta(days=1)
 
     return lst_days
