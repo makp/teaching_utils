@@ -41,14 +41,20 @@ def file_name_to_export(lst, output_dir):
 
     :return: A string representing the filename.
     """
+    if not lst:
+        raise ValueError("Empty list!")
+
     first_date = datetime.strptime(lst[0], '%m-%d-%y')
     first_month = first_date.strftime('%m')
     year = first_date.strftime('%y')
 
     terms = {'08': 'Fall', '01': 'Spring', '02': 'Spring'}
-    term = terms.get(first_month, '')
 
-    file_name = "teachingDates" + term + year + ".csv"
+    term = terms.get(first_month)
+    if not term:
+        raise ValueError(f"Unknown term for month: {first_month}")
+
+    file_name = f"teachingDates{term}{year}.csv"
 
     return os.path.join(output_dir, file_name)
 
