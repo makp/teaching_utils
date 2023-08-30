@@ -1,3 +1,7 @@
+import pandas as pd
+import ast
+
+
 def get_option_letters(n):
     return [chr(i) for i in range(ord('a'), ord('a') + n)]
 
@@ -24,9 +28,11 @@ def format_question(row, index):
 
 
 def write_formatted_questions(df, filename="output.txt"):
+    has_string = df['mc_options'].apply(lambda x: isinstance(x, str)).any()
+    if has_string:
+        df['mc_options'] = df['mc_options'].apply(ast.literal_eval)
     formatted_questions = [format_question(row, idx+1)
                            for idx, (_, row) in enumerate(df.iterrows())]
     with open(filename, "w") as file:
         for item in formatted_questions:
             file.write(f"{item}\n")
-
