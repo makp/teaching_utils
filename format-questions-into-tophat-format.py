@@ -13,6 +13,8 @@ def mark_correct_answer(answers, idx):
 
 
 def get_correct_answer_index(options, correct_answer):
+    if pd.isna(correct_answer):
+        return None
     return options.index(correct_answer) if correct_answer else None
 
 
