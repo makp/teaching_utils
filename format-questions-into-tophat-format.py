@@ -15,6 +15,8 @@ def mark_correct_answer(answers, idx):
 def get_correct_answer_index(options, correct_answer):
     if pd.isna(correct_answer):
         return None
+    if correct_answer in [True, False]:  # if I forgot to add quotes
+        correct_answer = str(correct_answer)
     return options.index(correct_answer) if correct_answer else None
 
 
@@ -30,9 +32,9 @@ def format_question(row, index):
 
 
 def write_formatted_questions(df, filename="output.txt"):
-    has_string = df['mc_options'].apply(lambda x: isinstance(x, str)).any()
-    if has_string:
-        df['mc_options'] = df['mc_options'].apply(ast.literal_eval)
+    mask = df['mc_options'].apply(lambda x: isinstance(x, str))
+    if mask.any():
+        df.loc[mask, 'mc_options'] = df.loc[mask, 'mc_options'].apply(ast.literal_eval)
     formatted_questions = [format_question(row, idx+1)
                            for idx, (_, row) in enumerate(df.iterrows())]
     with open(filename, "w") as file:
