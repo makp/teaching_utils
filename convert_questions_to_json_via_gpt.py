@@ -58,8 +58,7 @@ def convert_questions_to_json_via_gpt(questions, special_instruction="", model='
     response = openai.ChatCompletion.create(
         model=model,
         temperature=temperature,
-        messages=[{"role": "system", "content": "\n".join([MAIN_INSTRUCTION, special_instruction])},
+        messages=[{"role": "system", "content": "\n".join([INSTRUCTION_MAIN, special_instruction])},
                   {"role": "user", "content": content}]
     )
     return print(response['choices'][0]['message']['content'])
-
