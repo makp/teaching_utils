@@ -41,7 +41,11 @@ contract'.
 """
 
 
-def convert_questions_to_json_via_gpt(questions, special_instruction="", model='gpt-4', temperature=0.2):
+def convert_questions_to_json_via_gpt(questions,
+                                      output_file=None,
+                                      special_instruction="INSTRUCTION_NORMATIVE_ETHICS",
+                                      model='gpt-4',
+                                      temperature=0.2):
     """
     Convert questions to the JSON format using the GPT model. This
     function takes either a string containing questions or a file path
@@ -61,4 +65,12 @@ def convert_questions_to_json_via_gpt(questions, special_instruction="", model='
         messages=[{"role": "system", "content": "\n".join([INSTRUCTION_MAIN, special_instruction])},
                   {"role": "user", "content": content}]
     )
-    return print(response['choices'][0]['message']['content'])
+
+    out = response['choices'][0]['message']['content']
+
+    if output_file:
+        with open(output_file, 'w') as f:
+            f.write(out)
+        return print(f"File saved to {output_file}")
+    else:
+        return print(response['choices'][0]['message']['content'])
