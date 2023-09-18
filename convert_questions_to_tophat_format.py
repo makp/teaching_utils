@@ -1,5 +1,4 @@
 import json
-import ast
 
 
 def get_option_letters(n):
@@ -40,13 +39,3 @@ def write_formatted_questions_from_json(json_path, filename="output.txt"):
     with open(filename, "w") as file:
         for item in formatted_questions:
             file.write(f"{item}\n")
-
-# def write_formatted_questions_from_df(df, filename="output.txt"):
-#     mask = df['mc_options'].apply(lambda x: isinstance(x, str))
-#     if mask.any():
-#         df.loc[mask, 'mc_options'] = df.loc[mask, 'mc_options'].apply(ast.literal_eval)
-#     formatted_questions = [format_question(row, idx+1)
-#                            for idx, (_, row) in enumerate(df.iterrows())]
-#     with open(filename, "w") as file:
-#         for item in formatted_questions:
-#             file.write(f"{item}\n")
