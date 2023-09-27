@@ -37,7 +37,7 @@ INSTRUCTION_NORMATIVE_ETHICS = """
 For the "subject" key, use concise descriptors, ideally one or two
 words, to describe the topic of the question. Examples of such topics
 are: 'consequentialism', 'utilitarianism', 'deontology', 'social
-contract'.
+contract', and 'hedonism'.
 """
 
 
@@ -45,7 +45,7 @@ def convert_questions_to_json_via_gpt(questions,
                                       output_file=None,
                                       special_instruction="INSTRUCTION_NORMATIVE_ETHICS",
                                       model='gpt-4',
-                                      temperature=0.2):
+                                      temperature=0.5):
     """
     Convert questions to the JSON format using the GPT model. This
     function takes either a string containing questions or a file path
