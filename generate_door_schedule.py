@@ -13,7 +13,7 @@ template = env.get_template('door_schedule.j2')
 
 
 def create_door_schedule(semester):
-    folder_path = f"./teaching_data/door_schedule"
+    folder_path = "./teaching_data/door_schedule"
     file_name = f"door-schedule_{semester}.tex"
     full_path = os.path.join(folder_path, file_name)
 
@@ -33,7 +33,7 @@ def run_pdflatex(full_path):
     try:
         folder = os.path.dirname(full_path)
         subprocess.run(['pdflatex', os.path.basename(full_path)],
-                        check=True, cwd=folder)
+                       check=True, cwd=folder)
     except subprocess.CalledProcessError as e:
         print("Error running pdflatex:", e)
 
