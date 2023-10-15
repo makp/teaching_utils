@@ -40,11 +40,16 @@ are: 'consequentialism', 'utilitarianism', 'deontology', 'social
 contract', and 'hedonism'.
 """
 
+INSTRUCTION_GENERIC = """
+For the "subject" key, use concise descriptors, ideally one or two
+words, to describe the topic of the question.
+"""
+
 
 def convert_questions_to_json_via_gpt(questions,
                                       output_file=None,
-                                      special_instruction="INSTRUCTION_NORMATIVE_ETHICS",
-                                      model='gpt-4',
+                                      special_instruction="INSTRUCTION_GENERIC",
+                                      model='gpt-3.5-turbo',
                                       temperature=0.5):
     """
     Convert questions to the JSON format using the GPT model. This
