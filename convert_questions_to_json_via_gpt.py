@@ -1,3 +1,5 @@
+"""Convert questions to JSON format using the GPT model."""
+
 import openai
 import os
 
@@ -48,15 +50,16 @@ words, to describe the topic of the question.
 
 def convert_questions_to_json_via_gpt(questions,
                                       output_file=None,
-                                      special_instruction="INSTRUCTION_GENERIC",
-                                      model='gpt-3.5-turbo',
+                                      special_instruction="INSTRUCTION_GENERIC",  # noqa
+                                      model='gpt-4-1106-preview',
                                       temperature=0.5):
     """
-    Convert questions to the JSON format using the GPT model. This
-    function takes either a string containing questions or a file path
-    to a text file containing questions. It uses the specified GPT
-    model to generate JSON-formatted content from those questions and
-    prints the content.
+    Convert questions to JSON format using the GPT model.
+
+    This function takes either a string containing questions or a file
+    path to a text file containing questions. It uses the specified
+    GPT model to generate JSON-formatted content from those questions
+    and prints the content.
     """
     if os.path.isfile(questions):
         with open(questions, 'r') as f:
@@ -67,7 +70,8 @@ def convert_questions_to_json_via_gpt(questions,
     response = openai.ChatCompletion.create(
         model=model,
         temperature=temperature,
-        messages=[{"role": "system", "content": "\n".join([INSTRUCTION_MAIN, special_instruction])},
+        messages=[{"role": "system", "content":
+                   "\n".join([INSTRUCTION_MAIN, special_instruction])},
                   {"role": "user", "content": content}]
     )
 
