@@ -32,7 +32,9 @@ def format_question(q, index):
 
     idx = get_correct_answer_index(options, q['correct_answer'])
     answers = mark_correct_answer(
-        [f"{char}. {option}\n" for char, option in zip(get_option_letters(len(options)), options)], idx)
+        [f"{char}. {option}\n"
+         for char, option in zip(get_option_letters(len(options)), options)],
+        idx)
     return f"{index}. {q['question']}\n{''.join(answers)}"
 
 
@@ -41,7 +43,8 @@ def write_formatted_questions_from_json(json_path, filename="output.txt"):
     with open(json_path, 'r') as f:
         questions = json.load(f)
 
-    formatted_questions = [format_question(q, idx+1) for idx, q in enumerate(questions)]
+    formatted_questions = [format_question(q, idx+1)
+                           for idx, q in enumerate(questions)]
 
     with open(filename, "w") as file:
         for item in formatted_questions:
