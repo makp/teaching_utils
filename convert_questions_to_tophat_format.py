@@ -1,17 +1,22 @@
+"""Convert JSON-formatted questions to a text file in TopHat format."""
+
 import json
 
 
 def get_option_letters(n):
+    """Return a list of letters to use as multiple choice options."""
     return [chr(i) for i in range(ord('a'), ord('a') + n)]
 
 
 def mark_correct_answer(answers, idx):
+    """Mark the correct answer with an asterisk."""
     if idx is not None:
         answers[idx] = f"*{answers[idx]}"
     return answers
 
 
 def get_correct_answer_index(options, correct_answer):
+    """Return the index of the correct answer."""
     # if pd.isna(correct_answer):
     #     return None
     if correct_answer in [True, False]:  # if I forgot to add quotes
@@ -20,6 +25,7 @@ def get_correct_answer_index(options, correct_answer):
 
 
 def format_question(q, index):
+    """Format a question in TopHat format."""
     options = q['mc_options']
     if q['question_type'] == 'TF':
         options = ['True', 'False']
@@ -31,6 +37,7 @@ def format_question(q, index):
 
 
 def write_formatted_questions_from_json(json_path, filename="output.txt"):
+    """Write formatted questions to a text file."""
     with open(json_path, 'r') as f:
         questions = json.load(f)
 
