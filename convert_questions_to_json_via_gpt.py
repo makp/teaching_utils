@@ -1,9 +1,11 @@
 """Convert questions to JSON format using the GPT model."""
 
-import openai
 import os
+from openai import OpenAI
 
-openai.api_key = os.getenv("OPENAI_KEY")
+client = OpenAI(
+    api_key=os.getenv("OPENAI_KEY")
+)
 
 INSTRUCTION_MAIN = """
 Please convert the provided questions into the JSON format as outlined
@@ -67,19 +69,20 @@ def convert_questions_to_json_via_gpt(questions,
     else:
         content = questions
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model=model,
         temperature=temperature,
+        response_format={"type": "json_object"},
         messages=[{"role": "system", "content":
                    "\n".join([INSTRUCTION_MAIN, special_instruction])},
                   {"role": "user", "content": content}]
     )
 
-    out = response['choices'][0]['message']['content']
+    out = response.choices[0].message.content
 
     if output_file:
         with open(output_file, 'w') as f:
             f.write(out)
         return print(f"File saved to {output_file}")
     else:
-        return print(response['choices'][0]['message']['content'])
+        return print(out)
