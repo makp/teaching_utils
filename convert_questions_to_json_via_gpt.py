@@ -72,7 +72,7 @@ def convert_questions_to_json_via_gpt(questions,
     response = client.chat.completions.create(
         model=model,
         temperature=temperature,
-        response_format={"type": "json_object"},
+        # response_format={"type": "json_object"},
         messages=[{"role": "system", "content":
                    "\n".join([INSTRUCTION_MAIN, special_instruction])},
                   {"role": "user", "content": content}]
