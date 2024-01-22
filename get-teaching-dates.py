@@ -1,3 +1,5 @@
+"""Return the dates for a teaching schedule."""
+
 from datetime import datetime, timedelta
 import os
 import argparse
@@ -8,7 +10,9 @@ DATE_FORMAT = '%m-%d-%y'
 
 def list_all_dates(first, last, no_class=[], weekdays=[0, 2]):
     """
-    Generate a list of dates between `first` and `last` that fall on
+    Return of list of teaching dates.
+
+    The list of dates are between `first` and `last`, and fall on
     specified `weekdays`.
 
     :param first: Start date as a string in 'mm-dd-yy' format.
@@ -21,7 +25,6 @@ def list_all_dates(first, last, no_class=[], weekdays=[0, 2]):
     are marked with an asterisk.
     """
     # Convert str to datetime objects
-
     start_date = datetime.strptime(first, DATE_FORMAT)
     end_date = datetime.strptime(last, DATE_FORMAT)
     no_class_dates = {datetime.strptime(d, DATE_FORMAT) for d in no_class}
@@ -43,7 +46,7 @@ def list_all_dates(first, last, no_class=[], weekdays=[0, 2]):
 
 def file_name_to_export(lst, output_dir):
     """
-    Generate a filename based on the first date in the list.
+    Return filename based on class semester and year.
 
     :param lst: A list of dates.
     :param output_dir: The directory where the CSV file will be saved.
@@ -69,6 +72,7 @@ def file_name_to_export(lst, output_dir):
 
 
 def export_file(lst, output_dir="."):
+    """Write list of dates to a file."""
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -79,7 +83,10 @@ def export_file(lst, output_dir="."):
 
 def main():
     """
-    Example: python make_schedule.py 7-28-23 12-11-23 --no_class 9-4-23 11-22-23 --output_dir ./schedules
+    Generate teaching schedule and save it to a file.
+
+    Example: python make_schedule.py 7-28-23 12-11-23 --no_class
+    9-4-23 11-22-23 --output_dir ./schedules
     """
     parser = argparse.ArgumentParser(description='Generate teaching schedule.')
     parser.add_argument('start_date')
