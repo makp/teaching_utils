@@ -13,6 +13,7 @@ template = env.get_template('syllabus.j2')
 
 
 def create_syllabi(semester):
+    """Create syllabi in LaTeX format."""
     lst_tex_files = []
     for idx, syllabus_vars in enumerate(syllabi_data[semester]):
         base = f"syllabus_{semester}_{syllabus_vars['course_code'].lower()}-{idx + 1}"
@@ -30,6 +31,7 @@ def create_syllabi(semester):
 
 
 def run_pdflatex(tex_files):
+    """Run pdflatex on all tex files."""
     for tex in tex_files:
         try:
             folder = os.path.dirname(tex)
