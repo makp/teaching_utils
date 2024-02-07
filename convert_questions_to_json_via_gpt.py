@@ -50,11 +50,12 @@ words, to describe the topic of the question.
 """
 
 
-def convert_questions_to_json_via_gpt(questions,
-                                      output_file=None,
-                                      special_instruction="INSTRUCTION_GENERIC",  # noqa
-                                      model='gpt-4-1106-preview',
-                                      temperature=0.5):
+def convert_questions_to_json_via_gpt(
+        questions,
+        output_file=None,
+        special_instruction="INSTRUCTION_GENERIC",
+        model='gpt-4-turbo-preview',
+        temperature=0.5):
     """
     Convert questions to JSON format using the GPT model.
 
