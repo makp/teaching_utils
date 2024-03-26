@@ -49,3 +49,8 @@ def write_formatted_questions_from_json(json_path, filename="output.txt"):
     with open(filename, "w") as file:
         for item in formatted_questions:
             file.write(f"{item}\n")
+
+
+if __name__ == "__main__":
+    write_formatted_questions_from_json(
+        "/tmp/", "/tmp/output.txt")
