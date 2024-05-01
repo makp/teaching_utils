@@ -53,4 +53,6 @@ def write_formatted_questions_from_json(json_path, filename="output.txt"):
 
 if __name__ == "__main__":
     write_formatted_questions_from_json(
-        "/tmp/", "/tmp/output.txt")
+        "/tmp/",  # json file path
+        "/tmp/"   # output file path
+    )
