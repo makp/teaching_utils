@@ -54,7 +54,7 @@ def convert_questions_to_json_via_gpt(
         questions,
         output_file=None,
         special_instruction="INSTRUCTION_GENERIC",
-        model='gpt-4-turbo-preview',
+        model='gpt-4-turbo',
         temperature=0.5):
     """
     Convert questions to JSON format using the GPT model.
@@ -87,3 +87,13 @@ def convert_questions_to_json_via_gpt(
         return print(f"File saved to {output_file}")
     else:
         return print(out)
+
+
+if __name__ == "__main__":
+    base_name = "XXX"  # Insert the base name of the file
+    raw_questions = f"/tmp/{base_name}.org"
+    tophat_questions = f"/tmp/{base_name}.org"
+    convert_questions_to_json_via_gpt(
+        questions=raw_questions,
+        output_file=tophat_questions,
+    )
