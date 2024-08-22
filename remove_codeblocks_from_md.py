@@ -18,6 +18,8 @@ def clean_markdown(file_path):
 
     print(f"Cleaned file saved as: {file_out}")
 
+    return file_out
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
