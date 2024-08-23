@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import argparse
+import os
 import subprocess
 
 from remove_codeblocks_from_md import clean_markdown
@@ -21,7 +22,7 @@ def main():
         md_path = args.file_path
 
     # Convert markdown file to HTML
-    html_path = f"{md_path}.html"
+    html_path = f"{os.path.splitext(md_path)[0]}.html"
     subprocess.run(
         ["pandoc", "-s", "-f", "markdown", "-t", "html", md_path, "-o", html_path]
     )
