@@ -1,11 +1,10 @@
-"""Convert questions to JSON format using the GPT model."""
+"""Use GPT model to convert questions to JSON format."""
 
 import os
+
 from openai import OpenAI
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_KEY")
-)
+client = OpenAI()
 
 INSTRUCTION_MAIN = """
 Please convert the provided questions into the JSON format as outlined
@@ -49,15 +48,21 @@ For the "subject" key, use concise descriptors, ideally one or two
 words, to describe the topic of the question.
 """
 
+MODEL_ASSISTANT = os.environ.get("OPENAI_ADVANCED")
+
+if not MODEL_ASSISTANT:
+    raise ValueError("Please set the environment variable with GPT model.")
+
 
 def convert_questions_to_json_via_gpt(
-        questions,
-        output_file=None,
-        special_instruction="INSTRUCTION_GENERIC",
-        model='gpt-4-turbo',
-        temperature=0.5):
+    questions,
+    output_file=None,
+    special_instruction="INSTRUCTION_GENERIC",
+    model=MODEL_ASSISTANT,
+    temperature=0.5,
+):
     """
-    Convert questions to JSON format using the GPT model.
+    Use GPT model to convert questions to JSON format.
 
     This function takes either a string containing questions or a file
     path to a text file containing questions. It uses the specified
@@ -65,7 +70,7 @@ def convert_questions_to_json_via_gpt(
     and prints the content.
     """
     if os.path.isfile(questions):
-        with open(questions, 'r') as f:
+        with open(questions, "r") as f:
             content = f.read()
     else:
         content = questions
@@ -74,16 +79,20 @@ def convert_questions_to_json_via_gpt(
         model=model,
         temperature=temperature,
         # response_format={"type": "json_object"},
-        messages=[{"role": "system", "content":
-                   "\n".join([INSTRUCTION_MAIN, special_instruction])},
-                  {"role": "user", "content": content}]
+        messages=[
+            {
+                "role": "system",
+                "content": "\n".join([INSTRUCTION_MAIN, special_instruction]),
+            },
+            {"role": "user", "content": content},
+        ],
     )
 
     out = response.choices[0].message.content
 
     if output_file:
-        with open(output_file, 'w') as f:
-            f.write(out)
+        with open(output_file, "w") as f:
+            f.write(str(out))
         return print(f"File saved to {output_file}")
     else:
         return print(out)
