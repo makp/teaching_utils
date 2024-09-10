@@ -1,5 +1,8 @@
-"""Use GPT model to convert questions to JSON format."""
+#! /usr/bin/env python3
 
+"""Use GPT to convert questions to JSON format."""
+
+import argparse
 import os
 
 from openai import OpenAI
@@ -99,10 +102,18 @@ def convert_questions_to_json_via_gpt(
 
 
 if __name__ == "__main__":
-    base_name = "XXX"  # Insert the base name of the file
-    raw_questions = f"/tmp/{base_name}.org"
-    tophat_questions = f"/tmp/{base_name}.org"
+    parser = argparse.ArgumentParser(description="Convert questions to JSON format.")
+    parser.add_argument("questions", help="Path to questions file")
+    parser.add_argument(
+        "-o",
+        "--output",
+        help="Output file to write JSON-formatted questions to",
+        default="output.json",
+    )
+
+    args = parser.parse_args()
+
     convert_questions_to_json_via_gpt(
-        questions=raw_questions,
-        output_file=tophat_questions,
+        questions=args.questions,
+        output_file=args.output,
     )
